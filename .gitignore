@@ -1,21 +1,46 @@
-.idea
-.ipynb_checkpoints
-.mypy_cache
-.vscode
-__pycache__
-.pytest_cache
-htmlcov
-dist
-site
-.coverage*
-coverage.xml
-.netlify
-test.db
-log.txt
-Pipfile.lock
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs/temp
+*.log
+*.pid
+*.dump
+*.pot
+*.tmp
+
+# Environment variables
 .env
-docs_build
-site_build
-venv
-docs.zip
-archive.zip
+.env.local
+.env.dev
+.env.prod
+
+# Тest Data
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Alembic
+/alembic/versions/*
+
+# Dist
+dist/
+build/
+*.egg-info/
+*.whl
+
+# MacOS
+.DS_Store

@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from referral_system.database.session import AsyncSessionLocal
 from referral_system.models.referral_code import ReferralCode
 from referral_system.schemas.referral import ReferralCodeCreate, ReferralCodeResponse
+from referral_system.database.session import get_db
 from referral_system.services.security import get_current_user
 from referral_system.models.user import User
 from uuid import uuid4
@@ -13,7 +14,7 @@ router = APIRouter(prefix="/refcodes", tags=["refcodes"])
 async def create_referral_code(
     code_data: ReferralCodeCreate,
     user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(AsyncSessionLocal)
+    db: AsyncSession = Depends(get_db)
 ):
     """
     Создать реферальный код.
@@ -36,13 +37,14 @@ async def create_referral_code(
     )
     db.add(new_code)
     await db.commit()
+    await db.close()
     return new_code
 
 @router.delete("/delete/{code_id}")
 async def delete_referral_code(
     code_id: int,
     user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(AsyncSessionLocal)
+    db: AsyncSession = Depends(get_db)
 ):
     """
     Удалить реферальный код.
@@ -58,4 +60,5 @@ async def delete_referral_code(
     
     await db.delete(code)
     await db.commit()
+    await db.close()
     return {"status": "success"}

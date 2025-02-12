@@ -17,6 +17,7 @@ python-dotenv = "^1.0.1"
 alembic = "^1.14.1"
 pydantic = {extras = ["email"], version = "^2.10.6"}
 python-multipart = "^0.0.20"
+psycopg2 = "^2.9.10"
 
 
 [tool.poetry.group.dev.dependencies]

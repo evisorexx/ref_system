@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from referral_system.database.session import AsyncSessionLocal
+from referral_system.database.session import get_db
 from referral_system.models.user import User
 from referral_system.schemas.auth import UserCreate
 from referral_system.services.security import get_current_user
@@ -23,7 +24,7 @@ async def user_page(
 async def update_user_email(
     new_email: str,
     current_user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(AsyncSessionLocal)
+    db: AsyncSession = Depends(get_db)
 ):
     """
     Обновить email текущего пользователя.
@@ -37,16 +38,18 @@ async def update_user_email(
 
     current_user.email = new_email
     await db.commit()
+    await db.close()
     return {"message": "Email updated successfully"}
 
 @router.delete("/me", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(
     current_user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(AsyncSessionLocal)
+    db: AsyncSession = Depends(get_db)
 ):
     """
     Удалить текущего пользователя.
     """
     await db.delete(current_user)
     await db.commit()
+    await db.close()
     return None  # 204 No Content

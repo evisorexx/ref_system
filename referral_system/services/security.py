@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
+from sqlalchemy import select
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -7,7 +8,7 @@ from typing import Annotated
 import os
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import AsyncSession
-from referral_system.database.session import AsyncSessionLocal
+from referral_system.database.session import get_db
 from referral_system.models.user import User
 
 load_dotenv()
@@ -33,7 +34,7 @@ def create_access_token(data: dict) -> str:
 
 async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
-    db: AsyncSession = Depends(AsyncSessionLocal)
+    db: AsyncSession = Depends(get_db)
 ) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
