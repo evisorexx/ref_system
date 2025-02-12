@@ -1,0 +1,14 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from referral_system.database.session import Base
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    referrer_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+
+    referral_codes = relationship("ReferralCode", back_populates="user")
+    referrals = relationship("User")

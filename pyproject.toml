@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "referral-system"
+version = "0.1.0"
+description = "Test case"
+authors = ["Andrey M. <andr.makar9061@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
+sqlalchemy = "^2.0.38"
+asyncpg = "^0.30.0"
+python-jose = "^3.3.0"
+passlib = "^1.7.4"
+python-dotenv = "^1.0.1"
+alembic = "^1.14.1"
+pydantic = {extras = ["email"], version = "^2.10.6"}
+python-multipart = "^0.0.20"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.5"
+mypy = "^1.15.0"
+sqlalchemy2-stubs = "^0.0.2a38"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
