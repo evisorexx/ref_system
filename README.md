@@ -19,3 +19,4 @@
 - PostgreSQL ^14
 - SQLAlchemy
 - Alembic
+- JWT, OAuth2.0
